@@ -6,7 +6,7 @@
 
 ---
 
-![image (5).png](attachment:1af0a698-9443-430a-9552-3ab155ee2741:image_(5).png)
+![예시 이미지](pjt_wit_t11_front/src/assets/homepage.png)
 
 ## 🔍 프로젝트 개요
 
