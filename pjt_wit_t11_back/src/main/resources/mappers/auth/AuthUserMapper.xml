@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.WIT.auth.mapper.AuthUserMapper">
+
+    <select id="findByEmail" resultType="com.example.WIT.domain.User">
+        SELECT * FROM users WHERE email = #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.WIT.domain.User">
+        INSERT INTO users (username, password, email, roles)
+        VALUES (#{username}, #{password}, #{email}, #{roles})
+    </insert>
+
+    <update id="updatePassword">
+        UPDATE users
+        SET password = #{encodedPassword}
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

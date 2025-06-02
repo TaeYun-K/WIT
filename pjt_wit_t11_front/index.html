@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <style>
+      body {
+        background-color: #f6f8ff;
+        font-family: 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif;
+      }
+    </style>
+    <script>
+      function initMap() {}
+    </script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=67a196c36ee4a561a1b68bf2b7d77ae3&libraries=services&autoload=false"
+      defer
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxJ67OR0DAwSKXaP4Gvu21tRCCNjXVAtg&callback=initMap"
+      async
+      defer
+      loading="lazy"
+    ></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

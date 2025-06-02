@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.WIT.location.mapper.AttractionMapper">
+
+    <!-- 1) 전체 count -->
+    <select id="countAttractions" resultType="long">
+        SELECT COUNT(*) FROM attractions
+        <where>
+            <if test="region != null and region != 0">
+                AND area_code = #{region}
+            </if>
+            <if test="search != null and search.trim() != ''">
+                AND title LIKE CONCAT('%', #{search}, '%')
+            </if>
+            <if test="typeIds != null and typeIds.size() &gt; 0">
+                AND content_type_id IN
+                <foreach item="id" collection="typeIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="searchAttraction" resultType="com.example.WIT.domain.Attraction">
+        SELECT * FROM wit.attractions a join wit.attraction_reviews r
+        <where>
+            a.no = r.attraction_no
+            <!-- searchQuery가 넘어오면 name LIKE 조건 추가 -->
+            <if test="searchQuery != null and searchQuery.trim() != ''">
+                AND title LIKE CONCAT('%', #{searchQuery}, '%')
+            </if>
+            <!-- selectedRegion이 넘어오면 region = 조건 추가 -->
+            <if test="region != null and region != 0">
+                AND area_code = #{region}
+            </if>
+            <if test="typeIds != null and typeIds.size() &gt; 0">
+                AND content_type_id IN
+                <foreach item="id" collection="typeIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY rating DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+</mapper>

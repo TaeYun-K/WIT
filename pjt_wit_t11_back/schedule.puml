@@ -1,0 +1,159 @@
+@startuml
+class com.example.WIT.schedule.service.ScheduleService {
+- ScheduleMapper scheduleMapper
++ int save(Schedule)
+}
+
+
+class com.example.WIT.schedule.dto.ScheduleDetailDto {
+- int scheduleId
+- int userId
+- String title
+- LocalDate startDate
+- int dayCount
+- List<DayDetailDto> days
+}
+
+class com.example.WIT.schedule.dto.DaySaveDto {
+- int dayNumber
+- int scheduleId
+- String departureTime
+- int startAccommodationIndex
+- int endAccommodationIndex
+- int startStayDuration
+- int endStayDuration
+- int startTravelCar
+- int startTravelBus
+- int endTravelCar
+- int endTravelBus
+- List<PlaceDto> places
+}
+
+class com.example.WIT.schedule.dto.PlanSaveRequestDto {
+- Integer scheduleId
+- int userId
+- String title
+- String startDate
+- int dayCount
+- List<AccommodationDto> accommodations
+- Map<Integer,List<DayAccommodationDto>> dayAccommodations
+- Map<Integer,String> startTimes
+- Map<Integer,List<PlaceDto>> itinerary
+}
+
+class com.example.WIT.schedule.service.DayService {
+- DayMapper dayMapper
++ int save(Day)
+}
+
+
+class com.example.WIT.schedule.dto.PlaceDto {
+- Integer scheduleId
+- int placeId
+- int contentTypeId
+- int no
+- String title
+- int stayHour
+- int stayMin
+- int visitOrder
+- int duration
+- int travelCar
+- int travelBus
+- String firstImage1
+- String homepage
+- double latitude
+- double longitude
+- String addr1
+- String overview
+- double rating
+- int reviewCount
+}
+
+class com.example.WIT.schedule.dto.DayAccommodationDBDto {
+- int dayId
+- int scheduleId
+- int dayNumber
+- String departureTime
+- int startAccommodationIndex
+- int endAccommodationIndex
+- int startStayDuration
+- int endStayDuration
+- int startTravelCar
+- int startTravelBus
+}
+
+class com.example.WIT.schedule.dto.DayDetailDto {
+- int dayId
+- int dayNumber
+- String departureTime
+- DayAccommodationDBDto dayAccommodations
+- List<PlaceDto> places
+}
+
+class com.example.WIT.schedule.controller.PlanController {
+- PlanService planService
++ ResponseEntity<?> save(PlanSaveRequestDto)
+}
+
+
+class com.example.WIT.schedule.dto.ScheduleDto {
+- int scheduleId
+- String title
+- LocalDate startDate
+- int dayCount
+- int placeCount
++ {static} ScheduleDto from(Schedule,int)
+}
+
+
+interface com.example.WIT.schedule.mapper.ScheduleMapper {
+~ void insertSchedule(Schedule)
+~ List<Schedule> findSchedulesByUserId(int)
+~ int countPlacesByScheduleId(int)
+~ List<Integer> findDayIdsByScheduleId(int)
+~ void deleteDayPlacesByDayIds(List<Integer>)
+~ void deleteDaysByScheduleId(int)
+~ void deleteSchedule(int)
+~ ScheduleDetailDto findScheduleById(int)
+~ List<DayDetailDto> findDaysByScheduleId(int)
+~ List<PlaceDto> findPlacesByDayId(int)
+~ DayAccommodationDBDto findDayAccommodationByDayId(int)
+}
+
+class com.example.WIT.schedule.service.DayPlaceService {
+- DayPlaceMapper dayPlaceMapper
++ void save(DayPlace)
+}
+
+
+interface com.example.WIT.schedule.mapper.DayMapper {
+~ void insertDay(Day)
+}
+
+class com.example.WIT.schedule.service.PlanService {
+- ScheduleService scheduleService
+- DayService dayService
+- DayPlaceService dayPlaceService
+- AccommodationService accommodationService
+- ScheduleMapper scheduleMapper
+- AccommodationMapper accommodationMapper
++ void deleteSchedule(int)
++ void savePlan(PlanSaveRequestDto)
+- Day mapToDay(DaySaveDto)
+}
+
+
+class com.example.WIT.schedule.controller.ScheduleController {
+- ScheduleMapper scheduleMapper
+- AccommodationMapper accommodationMapper
+- PlanService planService
++ ResponseEntity<Void> deleteSchedule(int)
++ ResponseEntity<SendDataDto> getScheduleDetail(int)
+}
+
+
+interface com.example.WIT.schedule.mapper.DayPlaceMapper {
+~ void insertDayPlace(DayPlace)
+}
+
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+class com.example.WIT.user.dto.UserMyPageDto {
+- String username
+- String email
+- String createdAt
+- List<ScheduleDto> schedules
++ {static} UserMyPageDto from(User,List<ScheduleDto>)
+}
+
+
+class com.example.WIT.user.dto.UpdateUserRequest {
+- String username
+- String email
+- String password
+}
+
+interface com.example.WIT.user.mapper.UserMapper {
+~ void updateUserWithPassword(int,String,String,String)
+~ void updateUserWithoutPassword(int,String,String)
+~ void deleteById(int)
+}
+
+class com.example.WIT.user.controller.UserController {
+- AuthUserMapper authUserMapper
+- JwtUtil jwtUtil
+- ScheduleMapper scheduleMapper
+- UserService userService
++ ResponseEntity<UserMyPageDto> getMyPage(String)
++ ResponseEntity<?> updateUser(UpdateUserRequest,String)
++ ResponseEntity<?> deleteUser(String)
+}
+
+
+class com.example.WIT.user.service.UserService {
+- PasswordEncoder passwordEncoder
+- UserMapper userMapper
++ void updateUser(int,UpdateUserRequest)
++ void deleteUserById(int)
+}
+
+
+@enduml

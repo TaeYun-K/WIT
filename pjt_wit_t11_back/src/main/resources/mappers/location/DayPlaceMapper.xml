@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.WIT.schedule.mapper.DayPlaceMapper">
+
+    <insert id="insertDayPlace" parameterType="com.example.WIT.domain.DayPlace" useGeneratedKeys="true" keyProperty="placeId">
+        INSERT INTO dayplace (
+        day_id,
+        no,
+        visit_order,
+        duration,
+        travel_car,
+        travel_bus
+        )
+        VALUES (
+        #{dayId},
+        #{no},
+        #{visitOrder},
+        #{duration},
+        #{travelCar},
+        #{travelBus}
+        )
+    </insert>
+
+</mapper>

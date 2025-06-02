@@ -1,0 +1,10 @@
+@startuml
+class com.example.WIT.chatbot.controller.ChatController {
+- ChatClient chatClient
+- InMemoryChatMemory chatMemory
+- {static} String SYSTEM_PROMPT
++ ResponseEntity<Map<String,String>> chat(Map<String,String>)
+}
+
+
+@enduml

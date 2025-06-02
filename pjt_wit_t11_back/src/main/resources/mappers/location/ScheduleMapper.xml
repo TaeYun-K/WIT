@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.WIT.schedule.mapper.ScheduleMapper">
+
+    <insert id="insertSchedule" parameterType="com.example.WIT.schedule.dto.ScheduleDto" useGeneratedKeys="true" keyProperty="scheduleId">
+        INSERT INTO schedule (user_id, title, start_date, day_count)
+        VALUES (#{userId}, #{title}, #{startDate}, #{dayCount})
+    </insert>
+
+
+    <select id="findSchedulesByUserId" resultType="com.example.WIT.domain.Schedule">
+        SELECT schedule_id, user_id, title, start_date, day_count
+        FROM schedule
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="countPlacesByScheduleId" resultType="int">
+        SELECT COUNT(*)
+        FROM day d
+        JOIN dayplace dp ON d.day_id = dp.day_id
+        WHERE d.schedule_id = #{scheduleId}
+    </select>
+
+    <select id="findDayIdsByScheduleId" resultType="int">
+        SELECT day_id FROM day WHERE schedule_id = #{scheduleId}
+    </select>
+
+    <delete id="deleteDayPlacesByDayIds">
+        DELETE FROM dayplace WHERE day_id IN
+        <foreach item="id" collection="dayIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteDaysByScheduleId">
+        DELETE FROM day WHERE schedule_id = #{scheduleId}
+    </delete>
+
+    <delete id="deleteSchedule">
+        DELETE FROM schedule WHERE schedule_id = #{scheduleId}
+    </delete>
+
+    <select id="findScheduleById" resultType="com.example.WIT.schedule.dto.ScheduleDetailDto">
+        SELECT schedule_id, title, start_date, day_count
+        FROM schedule
+        WHERE schedule_id = #{scheduleId}
+    </select>
+
+    <select id="findDaysByScheduleId" resultType="com.example.WIT.schedule.dto.DayDetailDto">
+        SELECT day_id, day_number, departure_time
+        FROM day
+        WHERE schedule_id = #{scheduleId}
+    </select>
+
+    <select id="findPlacesByDayId" resultType="com.example.WIT.schedule.dto.PlaceDto">
+        SELECT
+        *
+        FROM dayplace dp
+        JOIN attractions a using(no)
+        WHERE dp.day_id = #{dayId}
+        ORDER BY dp.visit_order;
+    </select>
+
+    <select id="findDayAccommodationByDayId" resultType="com.example.WIT.schedule.dto.DayAccommodationDBDto">
+        SELECT
+            *
+        FROM day
+        WHERE day_id = #{dayId}
+    </select>
+
+</mapper>
