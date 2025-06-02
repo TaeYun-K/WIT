@@ -1,0 +1,93 @@
+@startuml
+class com.example.WIT.domain.Day {
+- int dayId
+- int scheduleId
+- int dayNumber
+- String departureTime
+- int startAccommodationIndex
+- int endAccommodationIndex
+- int startStayDuration
+- int endStayDuration
+- int startTravelCar
+- int startTravelBus
+- int endTravelCar
+- int endTravelBus
+}
+
+class com.example.WIT.domain.Attraction {
+- int no
+- int contentId
+- String title
+- int contentTypeId
+- int areaCode
+- int siGunGuCode
+- String firstImage1
+- String firstImage2
+- int mapLevel
+- double latitude
+- double longitude
+- String tel
+- String addr1
+- String addr2
+- String homepage
+- String overview
+- String rating
+- String reviewCount
+}
+
+class com.example.WIT.domain.Schedule {
+- int scheduleId
+- int userId
+- String title
+- LocalDate startDate
+- int dayCount
+}
+
+class com.example.WIT.domain.User {
+- int userId
+- String username
+- String password
+- String email
+- String roles
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+}
+
+class com.example.WIT.domain.DayPlace {
+- int placeId
+- int dayId
+- int no
+- int visitOrder
+- int duration
+- int travelCar
+- int travelBus
+}
+
+class com.example.WIT.domain.PlanItem {
+- int no
+- int contentId
+- String title
+- int contentTypeId
+- int areaCode
+- int siGunGuCode
+- String firstImage1
+- String firstImage2
+- int mapLevel
+- double latitude
+- double longitude
+- String tel
+- String addr1
+- String addr2
+- String homepage
+- String overview
+- String rating
+- String reviewCount
+- int instanceId
+- int stayHour
+- int stayMin
+- String time
+- int travelBus
+- int travelCar
+}
+
+@enduml

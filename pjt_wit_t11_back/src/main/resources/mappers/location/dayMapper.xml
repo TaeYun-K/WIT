@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.WIT.schedule.mapper.DayMapper">
+
+    <insert id="insertDay" parameterType="com.example.WIT.domain.Day" useGeneratedKeys="true" keyProperty="dayId">
+        INSERT INTO day (
+        schedule_id,
+        day_number,
+        departure_time,
+        start_accommodation_index,
+        end_accommodation_index,
+        start_stay_duration,
+        end_stay_duration,
+        start_travel_car,
+        start_travel_bus,
+        end_travel_car,
+        end_travel_bus
+        )
+        VALUES (
+        #{scheduleId},
+        #{dayNumber},
+        #{departureTime},
+        #{startAccommodationIndex},
+        #{endAccommodationIndex},
+        #{startStayDuration},
+        #{endStayDuration},
+        #{startTravelCar},
+        #{startTravelBus},
+        #{endTravelCar},
+        #{endTravelBus}
+        )
+    </insert>
+
+</mapper>

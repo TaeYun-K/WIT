@@ -1,0 +1,15 @@
+@startuml
+class com.example.WIT.config.SecurityConfig {
++ SecurityFilterChain filterChain(HttpSecurity,JwtAuthenticationFilter)
++ CorsConfigurationSource corsConfigurationSource()
+}
+
+class com.example.WIT.config.AiConfig {
++ InMemoryChatMemory chatMemory()
+}
+
+class com.example.WIT.config.EncoderConfig {
++ PasswordEncoder passwordEncoder()
+}
+
+@enduml

@@ -1,0 +1,515 @@
+@startuml
+top to bottom direction
+class com.example.WIT.location.dto.PageResultDto {
+- List<T> content
+- long totalElements
+- int totalPages
+}
+
+class com.example.WIT.location.service.AccommodationService {
+- AccommodationMapper accommodationMapper
++ void saveAll(List<AccommodationDto>,int)
+}
+
+
+class com.example.WIT.domain.DayPlace {
+- int placeId
+- int dayId
+- int no
+- int visitOrder
+- int duration
+- int travelCar
+- int travelBus
+}
+
+class com.example.WIT.location.dto.DayAccommodationDto {
+- int index
+- int stayHour
+- int stayMin
+- String time
+- int travelCar
+- int travelBus
+}
+
+class com.example.WIT.user.service.UserService {
+- PasswordEncoder passwordEncoder
+- UserMapper userMapper
++ void updateUser(int,UpdateUserRequest)
++ void deleteUserById(int)
+}
+
+
+class com.example.WIT.config.SecurityConfig {
++ SecurityFilterChain filterChain(HttpSecurity,JwtAuthenticationFilter)
++ CorsConfigurationSource corsConfigurationSource()
+}
+
+interface com.example.WIT.location.mapper.AttractionMapper {
+~ List<AttractionDto> searchAttraction(String,int,List<Integer>,int,int)
+~ long countAttractions(int,String,List<Integer>)
+}
+
+class com.example.WIT.schedule.dto.ScheduleDto {
+- int scheduleId
+- String title
+- LocalDate startDate
+- int dayCount
+- int placeCount
++ {static} ScheduleDto from(Schedule,int)
+}
+
+
+class com.example.WIT.auth.dto.ResetPasswordRequest {
+- String email
+}
+
+class com.example.WIT.domain.Day {
+- int dayId
+- int scheduleId
+- int dayNumber
+- String departureTime
+- int startAccommodationIndex
+- int endAccommodationIndex
+- int startStayDuration
+- int endStayDuration
+- int startTravelCar
+- int startTravelBus
+- int endTravelCar
+- int endTravelBus
+}
+
+class com.example.WIT.domain.Schedule {
+- int scheduleId
+- int userId
+- String title
+- LocalDate startDate
+- int dayCount
+}
+
+interface com.example.WIT.location.mapper.AccommodationMapper {
+~ void insertAccommodation(AccommodationDto)
+~ void insertScheduleAccommodation(int,long)
+~ List<AccommodationDto> findAccommodationsByScheduleId(int)
+~ void deleteAccommodationsByScheduleId(int)
+}
+
+class com.example.WIT.schedule.dto.DaySaveDto {
+- int dayNumber
+- int scheduleId
+- String departureTime
+- int startAccommodationIndex
+- int endAccommodationIndex
+- int startStayDuration
+- int endStayDuration
+- int startTravelCar
+- int startTravelBus
+- int endTravelCar
+- int endTravelBus
+- List<PlaceDto> places
+}
+
+class com.example.WIT.schedule.dto.PlanSaveRequestDto {
+- Integer scheduleId
+- int userId
+- String title
+- String startDate
+- int dayCount
+- List<AccommodationDto> accommodations
+- Map<Integer,List<DayAccommodationDto>> dayAccommodations
+- Map<Integer,String> startTimes
+- Map<Integer,List<PlaceDto>> itinerary
+}
+
+class com.example.WIT.schedule.dto.DayAccommodationDBDto {
+- int dayId
+- int scheduleId
+- int dayNumber
+- String departureTime
+- int startAccommodationIndex
+- int endAccommodationIndex
+- int startStayDuration
+- int endStayDuration
+- int startTravelCar
+- int startTravelBus
+}
+
+class com.example.WIT.chatbot.controller.ChatController {
+- ChatClient chatClient
+- InMemoryChatMemory chatMemory
+- {static} String SYSTEM_PROMPT
++ ResponseEntity<Map<String,String>> chat(Map<String,String>)
+}
+
+
+class com.example.WIT.schedule.controller.PlanController {
+- PlanService planService
++ ResponseEntity<?> save(PlanSaveRequestDto)
+}
+
+
+class com.example.WIT.schedule.service.PlanService {
+- ScheduleService scheduleService
+- DayService dayService
+- DayPlaceService dayPlaceService
+- AccommodationService accommodationService
+- ScheduleMapper scheduleMapper
+- AccommodationMapper accommodationMapper
++ void deleteSchedule(int)
++ void savePlan(PlanSaveRequestDto)
+- Day mapToDay(DaySaveDto)
+}
+
+
+class com.example.WIT.schedule.controller.ScheduleController {
+- ScheduleMapper scheduleMapper
+- AccommodationMapper accommodationMapper
+- PlanService planService
++ ResponseEntity<Void> deleteSchedule(int)
++ ResponseEntity<SendDataDto> getScheduleDetail(int)
+}
+
+
+class com.example.WIT.user.controller.UserController {
+- AuthUserMapper authUserMapper
+- JwtUtil jwtUtil
+- ScheduleMapper scheduleMapper
+- UserService userService
++ ResponseEntity<UserMyPageDto> getMyPage(String)
++ ResponseEntity<?> updateUser(UpdateUserRequest,String)
++ ResponseEntity<?> deleteUser(String)
+}
+
+
+class com.example.WIT.auth.dto.ResetPasswordConfirmRequest {
+- String token
+- String newPassword
+}
+
+class com.example.WIT.schedule.service.ScheduleService {
+- ScheduleMapper scheduleMapper
++ int save(Schedule)
+}
+
+
+class com.example.WIT.auth.filter.JwtAuthenticationFilter {
+- JwtUtil jwtUtil
+- AuthUserMapper authUserMapper
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
+}
+
+
+class com.example.WIT.auth.service.AuthUserService {
+- EmailService emailService
+- JwtUtil jwtUtil
+- AuthUserMapper authUserMapper
+- PasswordEncoder passwordEncoder
++ void signup(SignupRequest)
++ User findByEmail(String)
++ void sendResetEmail(String,int)
++ void updatePassword(int,String)
+}
+
+
+class com.example.WIT.user.dto.UpdateUserRequest {
+- String username
+- String email
+- String password
+}
+
+class com.example.WIT.location.dto.AccommodationDto {
+- long id
+- String name
+- String address
+- String phone
+- double latitude
+- double longitude
+- int scheduleId
+}
+
+class com.example.WIT.schedule.service.DayService {
+- DayMapper dayMapper
++ int save(Day)
+}
+
+
+class com.example.WIT.auth.dto.SignupRequest {
+- String username
+- String password
+- String email
+}
+
+class com.example.WIT.domain.Attraction {
+- int no
+- int contentId
+- String title
+- int contentTypeId
+- int areaCode
+- int siGunGuCode
+- String firstImage1
+- String firstImage2
+- int mapLevel
+- double latitude
+- double longitude
+- String tel
+- String addr1
+- String addr2
+- String homepage
+- String overview
+- String rating
+- String reviewCount
+}
+
+class com.example.WIT.schedule.service.DayPlaceService {
+- DayPlaceMapper dayPlaceMapper
++ void save(DayPlace)
+}
+
+
+interface com.example.WIT.schedule.mapper.DayMapper {
+~ void insertDay(Day)
+}
+
+class com.example.WIT.auth.dto.LoginRequest {
+- String email
+- String password
+}
+
+interface com.example.WIT.user.mapper.UserMapper {
+~ void updateUserWithPassword(int,String,String,String)
+~ void updateUserWithoutPassword(int,String,String)
+~ void deleteById(int)
+}
+
+class com.example.WIT.config.EncoderConfig {
++ PasswordEncoder passwordEncoder()
+}
+
+interface com.example.WIT.location.mapper.PlanMapper {
+~ List<AttractionDto> searchAttraction(String,int)
+}
+
+class com.example.WIT.schedule.dto.ScheduleDetailDto {
+- int scheduleId
+- int userId
+- String title
+- LocalDate startDate
+- int dayCount
+- List<DayDetailDto> days
+}
+
+class com.example.WIT.auth.util.JwtUtil {
+- EmailService emailService
+- String secretKey
+- long expirationTime
++ String createToken(int,String,String)
++ String extractEmail(String)
++ String createPasswordResetToken(int,String)
++ void sendResetEmail(String,String)
++ Claims parseToken(String)
+}
+
+
+class com.example.WIT.location.dto.AttractionDto {
+- int no
+- int contentId
+- String title
+- int contentTypeId
+- int areaCode
+- int siGunGuCode
+- String firstImage1
+- String firstImage2
+- int mapLevel
+- double latitude
+- double longitude
+- String tel
+- String addr1
+- String addr2
+- String homepage
+- String overview
+- String rating
+- String review_count
+}
+
+class com.example.WIT.domain.User {
+- int userId
+- String username
+- String password
+- String email
+- String roles
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+}
+
+class com.example.WIT.WitApplication {
++ {static} void main(String[])
+}
+
+interface com.example.WIT.auth.mapper.AuthUserMapper {
+~ User findByEmail(String)
+~ void insertUser(User)
+~ void updatePassword(int,String)
+}
+
+class com.example.WIT.location.controller.AttractionController {
+- AttractionService attractionService
++ ResponseEntity<PageResultDto> searchAttractions(int,int,Integer,String,String)
+}
+
+
+class com.example.WIT.schedule.dto.PlaceDto {
+- Integer scheduleId
+- int placeId
+- int contentTypeId
+- int no
+- String title
+- int stayHour
+- int stayMin
+- int visitOrder
+- int duration
+- int travelCar
+- int travelBus
+- String firstImage1
+- String homepage
+- double latitude
+- double longitude
+- String addr1
+- String overview
+- double rating
+- int reviewCount
+}
+
+class com.example.WIT.location.dto.PlanItemDto {
+- int no
+- int contentId
+- String title
+- int contentTypeId
+- int areaCode
+- int siGunGuCode
+- String firstImage1
+- String firstImage2
+- int mapLevel
+- double latitude
+- double longitude
+- String tel
+- String addr1
+- String addr2
+- String homepage
+- String overview
+- double rating
+- int reviewCount
+- int instanceId
+- int stayHour
+- int stayMin
+- String time
+- int travelBus
+- int travelCar
+}
+
+class com.example.WIT.auth.controller.AuthController {
+- AuthUserService authUserService
+- AuthUserMapper authUserMapper
+- JwtUtil jwtUtil
+- PasswordEncoder passwordEncoder
++ ResponseEntity<?> register(SignupRequest)
++ ResponseEntity<?> login(LoginRequest)
++ ResponseEntity<?> resetPassword(ResetPasswordConfirmRequest)
++ ResponseEntity<?> sendResetPasswordEmail(Map<String,String>)
++ ResponseEntity<?> verifyResetToken(String)
+}
+
+
+class com.example.WIT.location.service.AttractionService {
+- AttractionMapper attractionMapper
++ List<AttractionDto> searchAttraction(String,int,List<Integer>,int,int)
++ long countAttractions(int,String,List<Integer>)
+}
+
+
+class com.example.WIT.schedule.dto.DayDetailDto {
+- int dayId
+- int dayNumber
+- String departureTime
+- DayAccommodationDBDto dayAccommodations
+- List<PlaceDto> places
+}
+
+class com.example.WIT.user.dto.UserMyPageDto {
+- String username
+- String email
+- String createdAt
+- List<ScheduleDto> schedules
++ {static} UserMyPageDto from(User,List<ScheduleDto>)
+}
+
+
+class com.example.WIT.auth.service.EmailService {
+- JavaMailSender mailSender
++ void send(String,String,String)
+}
+
+
+interface com.example.WIT.schedule.mapper.ScheduleMapper {
+~ void insertSchedule(Schedule)
+~ List<Schedule> findSchedulesByUserId(int)
+~ int countPlacesByScheduleId(int)
+~ List<Integer> findDayIdsByScheduleId(int)
+~ void deleteDayPlacesByDayIds(List<Integer>)
+~ void deleteDaysByScheduleId(int)
+~ void deleteSchedule(int)
+~ ScheduleDetailDto findScheduleById(int)
+~ List<DayDetailDto> findDaysByScheduleId(int)
+~ List<PlaceDto> findPlacesByDayId(int)
+~ DayAccommodationDBDto findDayAccommodationByDayId(int)
+}
+
+class com.example.WIT.location.dto.SendDataDto {
+- Integer scheduleId
+- int userId
+- String tripName
+- String tripDays
+- String tripStart
+- Map<String,List<PlanItemDto>> itinerary
+- Map<String,List<DayAccommodationDto>> dayAccommodations
+- List<AccommodationDto> accommodations
+- Map<String,String> startTimes
+}
+
+class com.example.WIT.config.AiConfig {
++ InMemoryChatMemory chatMemory()
+}
+
+class com.example.WIT.domain.PlanItem {
+- int no
+- int contentId
+- String title
+- int contentTypeId
+- int areaCode
+- int siGunGuCode
+- String firstImage1
+- String firstImage2
+- int mapLevel
+- double latitude
+- double longitude
+- String tel
+- String addr1
+- String addr2
+- String homepage
+- String overview
+- String rating
+- String reviewCount
+- int instanceId
+- int stayHour
+- int stayMin
+- String time
+- int travelBus
+- int travelCar
+}
+
+interface com.example.WIT.schedule.mapper.DayPlaceMapper {
+~ void insertDayPlace(DayPlace)
+}
+
+
+
+org.springframework.web.filter.OncePerRequestFilter <|-- com.example.WIT.auth.filter.JwtAuthenticationFilter
+@enduml

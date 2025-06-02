@@ -1,0 +1,81 @@
+@startuml
+class com.example.WIT.auth.dto.SignupRequest {
+- String username
+- String password
+- String email
+}
+
+class com.example.WIT.auth.filter.JwtAuthenticationFilter {
+- JwtUtil jwtUtil
+- AuthUserMapper authUserMapper
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
+}
+
+
+class com.example.WIT.auth.service.AuthUserService {
+- EmailService emailService
+- JwtUtil jwtUtil
+- AuthUserMapper authUserMapper
+- PasswordEncoder passwordEncoder
++ void signup(SignupRequest)
++ User findByEmail(String)
++ void sendResetEmail(String,int)
++ void updatePassword(int,String)
+}
+
+
+class com.example.WIT.auth.util.JwtUtil {
+- EmailService emailService
+- String secretKey
+- long expirationTime
++ String createToken(int,String,String)
++ String extractEmail(String)
++ String createPasswordResetToken(int,String)
++ void sendResetEmail(String,String)
++ Claims parseToken(String)
+}
+
+
+class com.example.WIT.auth.service.EmailService {
+- JavaMailSender mailSender
++ void send(String,String,String)
+}
+
+
+class com.example.WIT.auth.dto.LoginRequest {
+- String email
+- String password
+}
+
+class com.example.WIT.auth.dto.ResetPasswordRequest {
+- String email
+}
+
+interface com.example.WIT.auth.mapper.AuthUserMapper {
+~ User findByEmail(String)
+~ void insertUser(User)
+~ void updatePassword(int,String)
+}
+
+class com.example.WIT.auth.dto.ResetPasswordConfirmRequest {
+- String token
+- String newPassword
+}
+
+class com.example.WIT.auth.controller.AuthController {
+- AuthUserService authUserService
+- AuthUserMapper authUserMapper
+- JwtUtil jwtUtil
+- PasswordEncoder passwordEncoder
++ ResponseEntity<?> register(SignupRequest)
++ ResponseEntity<?> login(LoginRequest)
++ ResponseEntity<?> resetPassword(ResetPasswordConfirmRequest)
++ ResponseEntity<?> sendResetPasswordEmail(Map<String,String>)
++ ResponseEntity<?> verifyResetToken(String)
+}
+
+
+
+
+org.springframework.web.filter.OncePerRequestFilter <|-- com.example.WIT.auth.filter.JwtAuthenticationFilter
+@enduml
