@@ -137,8 +137,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 import HeaderNavBar from '@/components/HeaderNavBar.vue'
+import api from '@/api'
 
 const router = useRouter()
 
@@ -162,7 +162,7 @@ const handleSignup = async () => {
   if (!isFormValid.value) return
 
   try {
-    const response = await axios.post('/api/auth/signup', {
+    const response = await api.post('/api/auth/signup', {
       username: username.value,
       password: password.value,
       email: email.value,
