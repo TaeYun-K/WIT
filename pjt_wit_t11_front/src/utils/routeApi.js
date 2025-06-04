@@ -1,5 +1,5 @@
 // utils/routeApi.js
-import axios from 'axios'
+import api from '@/api'
 
 // 환경 변수
 const KAKAO_KEY = import.meta.env.VITE_KAKAO_API_KEY
@@ -28,7 +28,7 @@ export async function kakaoMultiRoute(segments) {
     priority: 'RECOMMEND',
   }
   try {
-    const res = await axios.post(url, body, {
+    const res = await api.post(url, body, {
       headers: {
         Authorization: `KakaoAK ${KAKAO_KEY}`,
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export async function kakaoMultiRoute(segments) {
 export async function kakaoSingleRoute(from, to) {
   const url = 'https://apis-navi.kakaomobility.com/v1/directions'
   try {
-    const res = await axios.get(url, {
+    const res = await api.get(url, {
       params: {
         origin: `${from.longitude},${from.latitude}`,
         destination: `${to.longitude},${to.latitude}`,
