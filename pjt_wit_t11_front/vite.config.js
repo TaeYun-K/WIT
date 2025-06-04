@@ -17,7 +17,7 @@ export default defineConfig({
     proxy: {
       // /api 로 들어오는 요청은 모두 8080로 포워딩
       '/api': {
-        target: 'http://localhost:8081',
+        target: 'https://port-0-wit-mbhk6pks03b248b5.sel4.cloudtype.app',
         changeOrigin: true,
 
         rewrite: (path) => path.replace(/^\/api/, '/api'),
