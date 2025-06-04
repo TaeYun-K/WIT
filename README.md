@@ -6,6 +6,8 @@
 
 ---
 
+[홈페이지 링크] : https://web-vue-mbhk6pks03b248b5.sel4.cloudtype.app/
+
 ![예시 이미지](pjt_wit_t11_front/src/assets/homepage.png)
 
 ## 🔍 프로젝트 개요
