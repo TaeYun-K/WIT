@@ -65,17 +65,4 @@
 
 ---
 
-## 🚀 실행 방법
-
-### 1. 백엔드 실행
-```bash
-cd pjt_wit_t11_back
-./mvnw spring-boot:run
-```
-### 1. 프론트 실행
-```bash
-cd pjt_wit_t11_front
-npm install
-npm run dev
-```
 
