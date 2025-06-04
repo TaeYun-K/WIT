@@ -1777,7 +1777,8 @@ const searchAccommodation = async () => {
   ensureAccommodationMap()
   if (!accommodationSearchQuery.value.trim()) return
 
-  const kmaps = await loadKakaoMap()
+  const kakao = await loadKakaoMap()
+  const kmaps = kakao.maps
   const ps = new kmaps.services.Places()
 
   // 검색어로 장소 검색
@@ -1838,7 +1839,8 @@ const searchAccommodation = async () => {
 
 // 숙소 선택 (지도에서 선택)
 const selectAccommodation = async (place) => {
-  const kmaps = await loadKakaoMap()
+  const kakao = await loadKakaoMap()
+  const kmaps = kakao.maps
   const accommodationMap = new kmaps.Map(accommodationMapContainer.value, {
     center: new kmaps.LatLng(place.y, place.x),
     level: 3,
@@ -1915,7 +1917,8 @@ async function showPlaceDetailModal(place) {
 
   // 지도 줌인
   if (map && place.lat && place.lng) {
-    const kmaps = await loadKakaoMap()
+    const kakao = await loadKakaoMap()
+    const kmaps = kakao.maps
     const moveLatLon = new kmaps.LatLng(place.lat, place.lng)
     map.setCenter(moveLatLon)
     map.setLevel(3) // 줌 레벨 설정
@@ -2061,7 +2064,8 @@ onUnmounted(() => {
 
 async function ensureAccommodationMap() {
   if (accommodationMap) return
-  const kmaps = await loadKakaoMap()
+  const kakao = await loadKakaoMap()
+  const kmaps = kakao.maps
   accommodationMap = new kmaps.Map(accommodationMapContainer.value, {
     center: new kmaps.LatLng(33.3617, 126.5292),
     level: 9,
@@ -2458,7 +2462,8 @@ const showAccommodationOnMap = async (accom) => {
   ensureAccommodationMap()
   if (!accommodationMap) return
   console.log(accom)
-  const kmaps = await loadKakaoMap()
+  const kakao = await loadKakaoMap()
+  const kmaps = kakao.maps
   const pos = new kmaps.LatLng(accom.latitude, accom.longitude)
   accommodationMap.setCenter(pos)
   accommodationMap.setLevel(3)
@@ -2690,7 +2695,8 @@ async function drawSelectedMarkers() {
   if (!map || typeof map.getLevel !== 'function') return
   clearSelectedMarkers()
 
-  const kmaps = await loadKakaoMap()
+  const kakao = await loadKakaoMap()
+  const kmaps = kakao.maps // kmaps 별칭 사용
   const day = activeNav.value === 'places' ? placeDay.value : planDay.value
   const list = selectedPlacesByDay[day] || []
 
@@ -2779,7 +2785,8 @@ const selectedIds = computed(() => {
 
 // 2) addMarkers 함수 수정: 기본 마커 찍기 전 필터링
 async function addMarkers(newPlaces) {
-  const kmaps = await loadKakaoMap()
+  const kakao = await loadKakaoMap()
+  const kmaps = kakao.maps // kmaps 별칭 사용
   newPlaces.forEach((p) => {
     // 만약 이 place가 현재 선택된 목록에 있다면 기본 마커는 건너뛴다
     if (selectedIds.value.has(p.no)) return
@@ -2847,7 +2854,9 @@ watch(places, () => {
 async function onSidebarPlaceClick(place) {
   // 2. 글로벌 map 객체를 place 좌표로 이동 & 줌 레벨 높임
   if (map && place.latitude != null && place.longitude != null) {
-    const kmaps = await loadKakaoMap()
+    const kakao = await loadKakaoMap()
+    const kmaps = kakao.maps // kmaps 별칭 사용
+
     const latLng = new kmaps.LatLng(place.latitude, place.longitude)
     map.setCenter(latLng)
   }
