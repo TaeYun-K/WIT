@@ -1445,10 +1445,7 @@ import { kakaoMultiRoute, kakaoSingleRoute, googleTransitRoute } from '@/utils/r
 import { useUserStore } from '@/stores/user'
 import { getDefaultImage } from '@/utils/util'
 import ChatBot from '@/components/ChatBot.vue'
-<<<<<<< HEAD
 import { loadKakaoMap } from '@/utils/kakaoLoader'
-=======
->>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
 
 import api from '@/api'
 
