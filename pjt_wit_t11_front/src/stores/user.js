@@ -1,5 +1,9 @@
 // src/stores/user.js
 import { defineStore } from 'pinia'
+<<<<<<< HEAD
+=======
+import axios from 'axios'
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
 import api from '@/api'
 
 export const useUserStore = defineStore('user', {

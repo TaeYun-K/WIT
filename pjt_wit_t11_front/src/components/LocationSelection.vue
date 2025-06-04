@@ -1445,7 +1445,10 @@ import { kakaoMultiRoute, kakaoSingleRoute, googleTransitRoute } from '@/utils/r
 import { useUserStore } from '@/stores/user'
 import { getDefaultImage } from '@/utils/util'
 import ChatBot from '@/components/ChatBot.vue'
+<<<<<<< HEAD
 import { loadKakaoMap } from '@/utils/kakaoLoader'
+=======
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
 
 import api from '@/api'
 
@@ -1773,11 +1776,19 @@ const selectedAddressIndex = ref(null)
 const customPlaceName = ref('')
 
 // 숙소 검색
+<<<<<<< HEAD
 const searchAccommodation = async () => {
   ensureAccommodationMap()
   if (!accommodationSearchQuery.value.trim()) return
 
   const kmaps = await loadKakaoMap()
+=======
+const searchAccommodation = () => {
+  ensureAccommodationMap()
+  if (!accommodationSearchQuery.value.trim()) return
+
+  const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   const ps = new kmaps.services.Places()
 
   // 검색어로 장소 검색
@@ -1837,8 +1848,13 @@ const searchAccommodation = async () => {
 }
 
 // 숙소 선택 (지도에서 선택)
+<<<<<<< HEAD
 const selectAccommodation = async (place) => {
   const kmaps = await loadKakaoMap()
+=======
+const selectAccommodation = (place) => {
+  const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   const accommodationMap = new kmaps.Map(accommodationMapContainer.value, {
     center: new kmaps.LatLng(place.y, place.x),
     level: 3,
@@ -1909,13 +1925,21 @@ const selectedPlace = ref(null)
 let map = null // 지도 인스턴스 저장
 
 // 장소 클릭 핸들러
+<<<<<<< HEAD
 async function showPlaceDetailModal(place) {
+=======
+function showPlaceDetailModal(place) {
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   selectedPlace.value = place
   showPlaceDetail.value = true
 
   // 지도 줌인
   if (map && place.lat && place.lng) {
+<<<<<<< HEAD
     const kmaps = await loadKakaoMap()
+=======
+    const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
     const moveLatLon = new kmaps.LatLng(place.lat, place.lng)
     map.setCenter(moveLatLon)
     map.setLevel(3) // 줌 레벨 설정
@@ -2059,9 +2083,15 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
+<<<<<<< HEAD
 async function ensureAccommodationMap() {
   if (accommodationMap) return
   const kmaps = await loadKakaoMap()
+=======
+function ensureAccommodationMap() {
+  if (accommodationMap) return
+  const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   accommodationMap = new kmaps.Map(accommodationMapContainer.value, {
     center: new kmaps.LatLng(33.3617, 126.5292),
     level: 9,
@@ -2069,6 +2099,7 @@ async function ensureAccommodationMap() {
 }
 
 // 숙소 지도 초기화
+<<<<<<< HEAD
 onMounted(async () => {
   const kakao = await loadKakaoMap() // ✅ window.kakao 보장됨
 
@@ -2081,6 +2112,20 @@ onMounted(async () => {
 
   addMarkers(places.value) // ✅ 이후 로직도 안전
   drawSelectedMarkers()
+=======
+onMounted(() => {
+  window.kakao?.maps.load(() => {
+    if (accommodationMapContainer.value) {
+      const kmaps = window.kakao.maps
+      accommodationMap = new kmaps.Map(accommodationMapContainer.value, {
+        center: new kmaps.LatLng(33.3617, 126.5292),
+        level: 9,
+      })
+    }
+    addMarkers(places.value)
+    drawSelectedMarkers()
+  })
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
 })
 
 // 1) 이전에 찍어둔 마커/오버레이를 모두 지우는 함수
@@ -2094,6 +2139,7 @@ function clearSelectedMarkers() {
 }
 
 // activeNav 변경 감지하여 지도 초기화
+<<<<<<< HEAD
 watch(activeNav, async (newNav) => {
   if (newNav === 'accommodation') {
     await nextTick() // DOM 업데이트 보장
@@ -2107,6 +2153,23 @@ watch(activeNav, async (newNav) => {
     }
   }
 
+=======
+watch(activeNav, (newNav) => {
+  if (newNav === 'accommodation') {
+    // 다음 틱에 지도 초기화 (DOM이 업데이트된 후)
+    nextTick(() => {
+      if (accommodationMapContainer.value) {
+        window.kakao?.maps.load(() => {
+          const kmaps = window.kakao.maps
+          const accommodationMap = new kmaps.Map(accommodationMapContainer.value, {
+            center: new kmaps.LatLng(33.3617, 126.5292), // 제주도 중심
+            level: 9,
+          })
+        })
+      }
+    })
+  }
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   clearMarkers()
   addMarkers(places.value)
   drawSelectedMarkers()
@@ -2454,11 +2517,19 @@ const clearEndLocation = () => {
 }
 
 // 지도에서 숙소 위치 보기
+<<<<<<< HEAD
 const showAccommodationOnMap = async (accom) => {
   ensureAccommodationMap()
   if (!accommodationMap) return
   console.log(accom)
   const kmaps = await loadKakaoMap()
+=======
+const showAccommodationOnMap = (accom) => {
+  ensureAccommodationMap()
+  if (!accommodationMap) return
+  console.log(accom)
+  const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   const pos = new kmaps.LatLng(accom.latitude, accom.longitude)
   accommodationMap.setCenter(pos)
   accommodationMap.setLevel(3)
@@ -2686,11 +2757,19 @@ function clearMarkers() {
   baseMarkers.length = 0
 }
 
+<<<<<<< HEAD
 async function drawSelectedMarkers() {
   if (!map || typeof map.getLevel !== 'function') return
   clearSelectedMarkers()
 
   const kmaps = await loadKakaoMap()
+=======
+function drawSelectedMarkers() {
+  if (!map || typeof map.getLevel !== 'function') return
+  clearSelectedMarkers()
+
+  const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   const day = activeNav.value === 'places' ? placeDay.value : planDay.value
   const list = selectedPlacesByDay[day] || []
 
@@ -2778,8 +2857,13 @@ const selectedIds = computed(() => {
 })
 
 // 2) addMarkers 함수 수정: 기본 마커 찍기 전 필터링
+<<<<<<< HEAD
 async function addMarkers(newPlaces) {
   const kmaps = await loadKakaoMap()
+=======
+function addMarkers(newPlaces) {
+  const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   newPlaces.forEach((p) => {
     // 만약 이 place가 현재 선택된 목록에 있다면 기본 마커는 건너뛴다
     if (selectedIds.value.has(p.no)) return
@@ -2795,7 +2879,11 @@ async function addMarkers(newPlaces) {
 }
 
 // ④ places 초기 로딩 직후와, fetchPlaces 직후에 한 번 그려주기
+<<<<<<< HEAD
 onMounted(async () => {
+=======
+onMounted(() => {
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   const regionMap = {
     0: { lat: 36.5, lng: 127.8, level: 12 }, // 전국
     1: { lat: 37.5665, lng: 126.978, level: 8 }, // 서울특별시
@@ -2816,6 +2904,7 @@ onMounted(async () => {
     38: { lat: 34.8161, lng: 126.462, level: 10 }, // 전라남도
     39: { lat: 33.3996, lng: 126.5312, level: 9 }, // 제주특별자치도
   }
+<<<<<<< HEAD
 
   const kakao = await loadKakaoMap()
 
@@ -2829,6 +2918,15 @@ onMounted(async () => {
     addMarkers(places.value)
   }
 
+=======
+  window.kakao.maps.load(() => {
+    map = new window.kakao.maps.Map(mapContainer.value, {
+      center: new window.kakao.maps.LatLng(regionMap[0].lat, regionMap[0].lng),
+      level: regionMap[0].level,
+    })
+    addMarkers(places.value)
+  })
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
   watch(selectedRegion, (newCode) => {
     const info = regionMap[newCode]
     if (map && info) {
@@ -2844,10 +2942,17 @@ watch(places, () => {
   drawSelectedMarkers()
 })
 
+<<<<<<< HEAD
 async function onSidebarPlaceClick(place) {
   // 2. 글로벌 map 객체를 place 좌표로 이동 & 줌 레벨 높임
   if (map && place.latitude != null && place.longitude != null) {
     const kmaps = await loadKakaoMap()
+=======
+function onSidebarPlaceClick(place) {
+  // 2. 글로벌 map 객체를 place 좌표로 이동 & 줌 레벨 높임
+  if (map && place.latitude != null && place.longitude != null) {
+    const kmaps = window.kakao.maps
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
     const latLng = new kmaps.LatLng(place.latitude, place.longitude)
     map.setCenter(latLng)
   }

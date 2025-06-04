@@ -23,6 +23,13 @@ yarn-error.log
 # .env file 
 .env
 .env.local
+<<<<<<< HEAD
 .env.*
+=======
+<<<<<<< HEAD
+=======
+.env.*
+>>>>>>> f52e9b96c5669234c8331e9f2aa001ec6709ffeb
+>>>>>>> 8dabe5cd9dfd717d666ec535e96f37c38fa3d88d
 
 # End of https://www.toptal.com/developers/gitignore/api/vue,vuejs
