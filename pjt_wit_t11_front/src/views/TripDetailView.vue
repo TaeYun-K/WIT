@@ -489,7 +489,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import HeaderNavBar from '@/components/HeaderNavBar.vue'
-import axios from 'axios'
+import api from '@/api'
 
 const router = useRouter()
 const route = useRoute()
@@ -516,7 +516,7 @@ const loadTripData = async () => {
       throw new Error('로그인이 필요합니다.')
     }
 
-    const response = await axios.get(`/api/user/schedule/${savedScheduledId}`, {
+    const response = await api.get(`/api/user/schedule/${savedScheduledId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
 
