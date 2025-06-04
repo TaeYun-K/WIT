@@ -162,7 +162,7 @@ const handleSignup = async () => {
   if (!isFormValid.value) return
 
   try {
-    const response = await axios.post('http://localhost:8081/api/auth/signup', {
+    const response = await axios.post('/api/auth/signup', {
       username: username.value,
       password: password.value,
       email: email.value,
