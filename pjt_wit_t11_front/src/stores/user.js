@@ -1,6 +1,7 @@
 // src/stores/user.js
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import api from '@/api'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -17,7 +18,7 @@ export const useUserStore = defineStore('user', {
       const token = localStorage.getItem('jwt')
       if (!token) return
 
-      const response = await axios.get('/api/user/mypage', {
+      const response = await api.get('/api/user/mypage', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,7 +30,7 @@ export const useUserStore = defineStore('user', {
       const token = localStorage.getItem('jwt')
       if (!token) return
 
-      await axios.delete(`/api/user/schedule/${scheduleId}`, {
+      await api.delete(`/api/user/schedule/${scheduleId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
