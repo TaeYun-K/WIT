@@ -16,8 +16,7 @@
 
       <!-- 오른쪽 이미지 박스 -->
       <div class="hero-graphic">
-        <!-- 여기에 실제 GIF·이미지 경로를 바인딩 -->
-        <img :src="visual" alt="Hero Visual" />
+        <video src="/intro.mp4" autoplay muted loop playsinline class="hero-video"></video>
       </div>
     </section>
   </div>
@@ -25,11 +24,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import placeholder from '@/assets/logo.png' // 기본 GIF/이미지 (교체 가능)
 import Modal from '@/components/PlanModal.vue'
 import { useRouter } from 'vue-router'
 const showModal = ref(false)
-const visual = ref(placeholder)
 const router = useRouter()
 
 function onCreate({ name, days, startDate }) {
@@ -55,6 +52,12 @@ function onCreate({ name, days, startDate }) {
   margin: 0 auto;
   font-family: 'Noto Sans KR', sans-serif;
   color: #333;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 또는 contain */
 }
 
 /* 히어로 섹션 (높이는 네비게이션 제외한 전체) */
