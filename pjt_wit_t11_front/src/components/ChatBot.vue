@@ -268,7 +268,7 @@
 
 <script setup>
 import { ref, nextTick, onMounted } from 'vue'
-import axios from 'axios'
+import api from '@/api'
 
 const showChat = ref(false)
 const input = ref('')
@@ -303,7 +303,7 @@ const sendMessage = async () => {
   scrollToBottom()
 
   try {
-    const response = await axios.post('/api/chat', { message: userMessage })
+    const response = await api.post('/api/chat', { message: userMessage })
     messages.value.push({ role: 'assistant', content: response.data.answer })
   } catch (err) {
     console.error('Chat error:', err)

@@ -91,7 +91,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import api from '@/api'
 import HeaderNavBar from '@/components/HeaderNavBar.vue'
 import { useUserStore } from '@/stores/user'
 
@@ -105,7 +105,7 @@ const rememberMe = ref(false)
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post('/api/auth/login', {
+    const response = await api.post('/api/auth/login', {
       email: email.value, // 백엔드는 username으로 받음
       password: password.value,
     })

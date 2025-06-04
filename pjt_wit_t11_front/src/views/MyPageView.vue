@@ -622,8 +622,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import HeaderNavBar from '@/components/HeaderNavBar.vue'
 import Modal from '@/components/PlanModal.vue'
-import axios from 'axios'
 import { useUserStore } from '@/stores/user'
+import api from '@/api'
 
 const showModal = ref(false)
 
@@ -706,9 +706,9 @@ const saveSettings = async () => {
         updateData.password = userSettings.value.newPassword
       }
 
-      await axios.put('/api/user/update', updateData, {
+      await api.put('/api/user/update', updateData, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Aaxiosuthorization: `Bearer ${token}`,
         },
       })
 
@@ -739,7 +739,7 @@ const confirmDeleteAccount = async () => {
       const token = localStorage.getItem('jwt')
 
       // ✅ 계정 삭제 요청 (DELETE 메서드 사용)
-      await axios.delete('/api/user/delete', {
+      await api.delete('/api/user/delete', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -789,7 +789,7 @@ const editTrip = async (trip) => {
 
   const token = localStorage.getItem('jwt')
   try {
-    const response = await axios.get(`/api/user/schedule/${trip.scheduleId}`, {
+    const response = await api.get(`/api/user/schedule/${trip.scheduleId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
 
@@ -823,7 +823,7 @@ const deleteTrip = async (scheduleId) => {
   }
 
   try {
-    await axios.delete(`/api/user/schedule/${scheduleId}`, {
+    await api.delete(`/api/user/schedule/${scheduleId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
   } catch (error) {

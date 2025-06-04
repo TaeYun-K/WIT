@@ -1446,7 +1446,8 @@ import { useUserStore } from '@/stores/user'
 import { getDefaultImage } from '@/utils/util'
 import ChatBot from '@/components/ChatBot.vue'
 
-import axios from 'axios'
+import api from '@/api'
+
 const router = useRouter()
 const route = useRoute()
 
@@ -1651,7 +1652,7 @@ const saveTrip = async () => {
     accommodations: accommodations.value,
   }
   try {
-    const res = await axios.post('/api/plan/save', payload)
+    const res = await api.post('/api/plan/save', payload)
     console.log('저장 성공:', res.data)
     alert('일정이 성공적으로 저장되었습니다!')
   } catch (err) {
@@ -1938,7 +1939,7 @@ async function fetchPage(page = 1) {
   loadingMore.value = true
   try {
     const typeParam = typeParamMap[activeTab.value]
-    const res = await axios.get('/api/attractions', {
+    const res = await api.get('/api/attractions', {
       params: {
         page,
         size: pageSize,
